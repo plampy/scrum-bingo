@@ -1,0 +1,19 @@
+<ng-container *ngIf="board$ | async; let playerBoard">
+	<div class="header">
+		<button mat-raised-button (click)="createBoard()">new board</button>
+		{{ playerBoard.id }}
+	</div>
+
+	<div class="board-wrap">
+		<bingo-board [board]="playerBoard" (squareClicked)="boardSvc.updateBoard(playerBoard)">
+		</bingo-board>
+	</div>
+</ng-container>
+
+<div class="other-players">
+	<div class="mini-board" *ngFor="let pb of competitorBoards$ | async">
+		<bingo-board [board]="pb" size="mini">
+		</bingo-board>
+		{{pb.id}}
+	</div>
+</div>

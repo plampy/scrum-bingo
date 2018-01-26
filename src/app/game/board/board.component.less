@@ -1,0 +1,47 @@
+.header {
+	padding: 16px 0;
+}
+
+.board {
+    border-radius: 10px;
+    display: table;
+    width: 800px;
+	height: 800px;
+	&.mini {
+		width: 120px;
+		height: 120px;
+	}
+    .row {
+        display: table-row;
+        height: 20%;
+        .square {
+			user-select: none;
+			position: relative;
+			text-align: center;
+			vertical-align: middle;
+            cursor: pointer;
+            border-left: 2px solid #424242;
+            border-top: 2px solid #424242;
+            padding: 5px;
+            display: table-cell;
+            width: 20%;
+            background-color: #E3F2FD;
+            &.selected {
+				cursor: not-allowed;
+				background-color:rgba(140, 201, 249, .8);
+				transition: .3s background-color;
+            }
+            &:last-child {
+                border-right: 2px solid #424242;
+			}
+			&.mini {
+				cursor: default;
+			}
+        }
+        &:last-child {
+            .square {
+                border-bottom: 2px solid #424242;
+            }
+        }
+    }
+}

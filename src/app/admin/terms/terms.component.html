@@ -1,0 +1,53 @@
+<div class="table-wrap">
+	<mat-paginator #paginator [pageSize]="10"></mat-paginator>
+
+	<mat-table #table [dataSource]="terms">
+		<ng-container matColumnDef="text">
+			<mat-header-cell *matHeaderCellDef>
+				<mat-expansion-panel #addPanel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							New
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+					<mat-form-field>
+						<input matInput #ipt placeholder="Create new entry">
+					</mat-form-field>
+					<button mat-mini-fab color="primary" (click)="createTerm(ipt.value); ipt.value = ''">
+						<mat-icon matTooltip="save">done</mat-icon>
+					</button>
+				</mat-expansion-panel>
+			</mat-header-cell>
+			<mat-cell *matCellDef='let term'>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							{{ term.text }}
+						</mat-panel-title>
+					</mat-expansion-panel-header>
+
+					<mat-form-field>
+						<input matInput #ipt [ngModel]="term.text">
+					</mat-form-field>
+
+					<button mat-mini-fab color="primary" (click)="saveTerm(term.id, ipt.value)">
+						<mat-icon matTooltip="save">done</mat-icon>
+					</button>
+					<button mat-mini-fab color="warn" (click)="deleteTerm(term.id)">
+						<mat-icon matTooltip="delete">delete</mat-icon>
+					</button>
+				</mat-expansion-panel>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="id">
+			<mat-header-cell *matHeaderCellDef></mat-header-cell>
+			<mat-cell *matCellDef="let term">
+				{{term.id}}
+			</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="['id', 'text']"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: ['id', 'text'];"></mat-row>
+	</mat-table>
+</div>

@@ -1,0 +1,20 @@
+<div class="board" [class.mini]="size == 'mini'">
+	<div class="row" *ngFor="let row of board?.rows">
+		<ng-container *ngIf="size == 'mini'">
+			<div class="square mini"
+				*ngFor="let square of row.squares" 
+				[class.selected]="square.selected">
+			</div>
+		</ng-container>
+		<ng-container *ngIf="size == 'default'">
+			<div matRipple
+				[matRippleColor]="'rgba(140, 201, 249, .6)'"
+				class="square" 
+				*ngFor="let square of row.squares" 
+				(click)="markSquare(square)" 
+				[class.selected]="square.selected">
+					{{square.text}}
+			</div>
+		</ng-container>
+	</div>
+</div>
