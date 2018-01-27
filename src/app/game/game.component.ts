@@ -38,7 +38,7 @@ export class GameComponent implements OnInit {
 			})
 		);
 		this.competitorBoards$ = this.boardSvc
-			.getCompetitorBoards(roomId);
+			.getByRoom(roomId);
 			// .pipe(
 			// map(boards => boards.filter(b => b))
 			// )

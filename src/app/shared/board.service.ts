@@ -45,7 +45,7 @@ export class BoardService {
 		);
 	}
 
-	getCompetitorBoards(roomId: string): Observable<Board[]> {
+	getByRoom(roomId: string): Observable<Board[]> {
 		return this.afs.collection<Board>(this.boardDb, ref => ref.where('roomId', '==', roomId))
 			.snapshotChanges()
 			.pipe(
