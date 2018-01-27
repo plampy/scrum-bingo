@@ -5,6 +5,7 @@ import 'rxjs/add/observable/fromPromise';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
 import { map, take } from 'rxjs/operators';
+import { withId } from './firebase-helper';
 
 @Injectable()
 export class RoomService {
@@ -25,11 +26,7 @@ export class RoomService {
 		const collection = this.afs.collection(this.dbName);
 		return this.afs.collection<Room>(this.dbName).snapshotChanges()
 			.pipe(
-			map(actions => actions.map(action => {
-				const data = <Room>action.payload.doc.data();
-				data.id = action.payload.doc.id;
-				return data;
-			}))
+			map(actions => withId<Room>(actions))
 			);
 	}
 

@@ -4,12 +4,14 @@ import { BoardComponent } from './board/board.component';
 import { SharedModule } from '../shared/shared.module';
 import { GameComponent } from './game.component';
 import { RoomComponent } from './containers/room/room.component';
+import { BoardCreatedGuard } from './guards/board-created.guard';
 
 @NgModule({
 	imports: [
 		CommonModule,
 		SharedModule
 	],
+	providers: [BoardCreatedGuard],
 	declarations: [GameComponent, BoardComponent, RoomComponent],
 	exports: [GameComponent, BoardComponent, RoomComponent]
 })

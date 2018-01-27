@@ -12,6 +12,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { GameModule } from './game/game.module';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,8 @@ import { GameModule } from './game/game.module';
 		MatButtonModule,
 		BrowserAnimationsModule,
 		AngularFireModule.initializeApp(environment.firebase),
-		AngularFirestoreModule
+		AngularFirestoreModule,
+		AngularFireAuthModule
 	],
 	providers: [
 		{ provide: LocationStrategy, useClass: HashLocationStrategy }

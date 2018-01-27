@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators/switchMap';
 import 'rxjs/add/observable/fromPromise';
 import { Board } from './models/board.model';
 import { Square } from './models/square.model';
+import { withId } from './firebase-helper';
 
 @Injectable()
 export class TermsService {
@@ -33,11 +34,8 @@ export class TermsService {
 
 	getTerms(): Observable<Term[]> {
 		return this.afs.collection<Term>(this.termDb).snapshotChanges()
-			.map(actions =>
-				actions.map(action => {
-					const data = <Term>action.payload.doc.data();
-					data.id = action.payload.doc.id;
-					return data;
-				}));
+			.pipe(
+			map(actions => withId<Term>(actions))
+			);
 	}
 }

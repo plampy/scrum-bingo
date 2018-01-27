@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { Board } from '../shared/models/board.model';
-import { BoardService } from '../shared/board.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { mergeMap, tap, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/operators/combineLatest';
+
+import { Board } from '../shared/models/board.model';
+import { BoardService } from '../shared/board.service';
 import { Room } from '../shared/models/room.model';
 import { RoomService } from '../shared/room.service';
-import { combineLatest } from 'rxjs/operators/combineLatest';
+import { PlayerService } from '../shared/player.service';
+import { Player } from '../shared/models/player.model';
 
 @Component({
 	selector: 'bingo-game',
@@ -16,35 +20,27 @@ import { combineLatest } from 'rxjs/operators/combineLatest';
 export class GameComponent implements OnInit {
 	public board$: Observable<Board>;
 	public competitorBoards$: Observable<Board[]>;
+	public player$: Observable<Player>;
 
 	constructor(
 		public boardSvc: BoardService,
 		public roomSvc: RoomService,
-		private router: Router) { }
+		private playerSvc: PlayerService,
+		private route: ActivatedRoute) { }
 
 	ngOnInit() {
-		const roomJson = localStorage.getItem('room');
-		if (!roomJson) {
-			this.router.navigate(['/rooms']);
-		}
-		const room = <Room>JSON.parse(roomJson);
-
-		const boardId = localStorage.getItem('boardId');
-		if (!boardId) {
-			this.board$ = this.boardSvc.createBoard(room.id).pipe(
-				switchMap(b => {
-					room.boards.push(b.id);
-					return this.roomSvc.updateRoom(room).pipe(
-						tap(r => {
-							const updatedRoomJson = JSON.stringify(room);
-							localStorage.setItem('room', updatedRoomJson);
-						}),
-						map(r => b)
-					);
-				})
-			);
-		}
-
-		this.competitorBoards$ = this.boardSvc.getCompetitorBoards(room.id);
+		const roomId = this.route.snapshot.params['roomId'];
+		this.player$ = this.playerSvc.player$;
+		this.board$ = this.player$.pipe(
+			switchMap(player => {
+				const boardId = player.boards[roomId];
+				return this.boardSvc.getBoard(boardId);
+			})
+		);
+		this.competitorBoards$ = this.boardSvc
+			.getCompetitorBoards(roomId);
+			// .pipe(
+			// map(boards => boards.filter(b => b))
+			// )
 	}
 }

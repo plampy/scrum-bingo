@@ -14,6 +14,7 @@ import { MatRippleModule } from '@angular/material/core';
 
 import { BoardService } from './board.service';
 import { RoomService } from './room.service';
+import { PlayerService } from './player.service';
 
 @NgModule({
 	imports: [
@@ -23,7 +24,8 @@ import { RoomService } from './room.service';
 	providers: [
 		TermsService,
 		BoardService,
-		RoomService
+		RoomService,
+		PlayerService
 	],
 	exports: [
 		MatButtonModule,

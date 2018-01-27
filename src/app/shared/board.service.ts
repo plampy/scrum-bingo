@@ -8,6 +8,8 @@ import { take } from 'rxjs/operators/take';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { map, filter } from 'rxjs/operators';
 import 'rxjs/add/observable/forkJoin';
+import { of } from 'rxjs/observable/of';
+import { withId } from './firebase-helper';
 
 @Injectable()
 export class BoardService {
@@ -15,10 +17,6 @@ export class BoardService {
 	constructor(private afs: AngularFirestore) { }
 
 	createBoard(roomId: string): Observable<Board> {
-		// if (previousBoard) {
-		// 	const doc = this.afs.collection(this.boardDb).doc(previousBoard.id);
-		// 	doc.delete(); // todo: throw this in the pipe below
-		// }
 		return this.afs.collection<Term>('terms').valueChanges()
 			.pipe(
 			take(1),
@@ -39,27 +37,28 @@ export class BoardService {
 			}));
 	}
 
+	getBoard(boardId: string): Observable<Board> {
+		const boardDoc = this.afs.collection<Board>(this.boardDb).doc<Board>(boardId);
+		return boardDoc.valueChanges().pipe(
+			take(1),
+			map(board => ({ ...board, id: boardId }))
+		);
+	}
+
 	getCompetitorBoards(roomId: string): Observable<Board[]> {
-		console.log(`searching for roomid ${roomId}`);
 		return this.afs.collection<Board>(this.boardDb, ref => ref.where('roomId', '==', roomId))
 			.snapshotChanges()
-			.map(actions =>
-				actions.map(action => {
-					const data = <Board>action.payload.doc.data();
-					data.id = action.payload.doc.id;
-					return data;
-				}));
+			.pipe(
+				map(actions => withId<Board>(actions))
+			);
 	}
 
 	getAllBoards(): Observable<Board[]> {
 		return this.afs.collection<Board>(this.boardDb)
 			.snapshotChanges()
-			.map(actions =>
-				actions.map(action => {
-					const data = <Board>action.payload.doc.data();
-					data.id = action.payload.doc.id;
-					return data;
-				}));
+			.pipe(
+				map(actions => withId<Board>(actions))
+			);
 	}
 
 	updateBoard(board: Board) {
