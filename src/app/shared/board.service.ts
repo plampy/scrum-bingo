@@ -16,12 +16,12 @@ export class BoardService {
 	readonly boardDb = 'board';
 	constructor(private afs: AngularFirestore) { }
 
-	createBoard(roomId: string): Observable<Board> {
+	createBoard(): Observable<Board> {
 		return this.afs.collection<Term>('terms').valueChanges()
 			.pipe(
 			take(1),
-			switchMap(terms => {
-				const board: Board = { rows: [], roomId };
+			map(terms => {
+				const board: Board = { rows: [] };
 				terms.sort((s1, s2) => 0.5 - Math.random());
 				for (let i = 0; i < 5; i++) {
 					const rowContent = terms.slice(i * 5, i * 5 + 5);
@@ -29,12 +29,15 @@ export class BoardService {
 					board.rows.push({ squares: squares });
 				}
 				board.rows[2].squares[2] = { selected: true, text: 'Free' };
-				const promise = this.afs.collection(this.boardDb).add(board);
-				return Observable.fromPromise(promise).map(x => {
-					board.id = x.id;
-					return board;
-				});
+				return board;
 			}));
+	}
+
+	addBoard(board: Board): Observable<Board> {
+		const promise = this.afs.collection(this.boardDb).add(board);
+		return Observable.fromPromise(promise).pipe(
+			map(x => ({ ...board, id: x.id }))
+		);
 	}
 
 	getBoard(boardId: string): Observable<Board> {
@@ -49,7 +52,7 @@ export class BoardService {
 		return this.afs.collection<Board>(this.boardDb, ref => ref.where('roomId', '==', roomId))
 			.snapshotChanges()
 			.pipe(
-				map(actions => withId<Board>(actions))
+			map(actions => withId<Board>(actions))
 			);
 	}
 
@@ -57,13 +60,16 @@ export class BoardService {
 		return this.afs.collection<Board>(this.boardDb)
 			.snapshotChanges()
 			.pipe(
-				map(actions => withId<Board>(actions))
+			map(actions => withId<Board>(actions))
 			);
 	}
 
-	updateBoard(board: Board) {
+	updateBoard(board: Board): Observable<Board> {
 		const doc = this.afs.collection<Board>(this.boardDb).doc(board.id);
-		doc.update(board);
+		const promise = doc.update(board);
+		return Observable.fromPromise(promise).pipe(
+			map(x => board)
+		);
 	}
 
 	deleteBoards(): Observable<any> {

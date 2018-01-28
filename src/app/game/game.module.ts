@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BoardComponent } from './board/board.component';
+import { BoardComponent } from './components/board/board.component';
 import { SharedModule } from '../shared/shared.module';
-import { GameComponent } from './game.component';
+import { GameComponent } from './containers/game/game.component';
 import { RoomComponent } from './containers/room/room.component';
 import { BoardCreatedGuard } from './guards/board-created.guard';
 

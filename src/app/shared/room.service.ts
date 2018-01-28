@@ -4,7 +4,7 @@ import { Room } from './models/room.model';
 import 'rxjs/add/observable/fromPromise';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
-import { map, take } from 'rxjs/operators';
+import { map, take, switchMap, tap } from 'rxjs/operators';
 import { withId } from './firebase-helper';
 
 @Injectable()
@@ -14,11 +14,11 @@ export class RoomService {
 	constructor(private afs: AngularFirestore) { }
 
 	createRoom(name: string): Observable<Room> {
-		const room: Partial<Room> = { name, boards: [] };
+		const room: Partial<Room> = { name, boards: {} };
 		const collection = this.afs.collection(this.dbName);
 		const result = Observable.fromPromise(collection.add(room));
 		return result.pipe(
-			map(r => <Room>{ id: r.id, name, boards: [] })
+			map(r => <Room>{ id: r.id, name, boards: {} })
 		);
 	}
 
@@ -30,9 +30,15 @@ export class RoomService {
 			);
 	}
 
-	updateRoom(room: Room): Observable<any> {
-		const doc = this.afs.collection<Room>(this.dbName).doc(room.id);
-		const promise = doc.update(room);
-		return Observable.fromPromise(promise);
+	updateRoom(changes: Partial<Room>): Observable<any> {
+		const doc = this.afs.collection<Room>(this.dbName).doc<Room>(changes.id);
+		return doc.valueChanges().pipe(
+			map(room =>
+				({
+					...room, ...changes, boards: { ...room.boards, ...changes.boards }
+				})
+			),
+			switchMap(room => Observable.fromPromise(doc.update(room)))
+		);
 	}
 }

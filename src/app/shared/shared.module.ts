@@ -15,12 +15,13 @@ import { MatRippleModule } from '@angular/material/core';
 import { BoardService } from './board.service';
 import { RoomService } from './room.service';
 import { PlayerService } from './player.service';
+import { KeysPipe } from './pipes/keys.pipe';
 
 @NgModule({
 	imports: [
 		CommonModule
 	],
-	declarations: [],
+	declarations: [KeysPipe],
 	providers: [
 		TermsService,
 		BoardService,
@@ -36,7 +37,8 @@ import { PlayerService } from './player.service';
 		MatInputModule,
 		MatFormFieldModule,
 		MatMenuModule,
-		MatRippleModule
+		MatRippleModule,
+		KeysPipe
 	]
 })
 export class SharedModule { }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GameComponent } from './game/game.component';
+import { GameComponent } from './game/containers/game/game.component';
 import { RoomComponent } from './game/containers/room/room.component';
 import { BoardCreatedGuard } from './game/guards/board-created.guard';
 

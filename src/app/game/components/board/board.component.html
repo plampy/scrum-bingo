@@ -9,6 +9,7 @@
 		<ng-container *ngIf="size == 'default'">
 			<div matRipple
 				[matRippleColor]="'rgba(140, 201, 249, .6)'"
+				[matRippleDisabled]="square.selected"
 				class="square" 
 				*ngFor="let square of row.squares" 
 				(click)="markSquare(square)" 

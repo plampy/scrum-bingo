@@ -3,7 +3,7 @@
 		<mat-card-title>{{ room.name }}</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
-		<div *ngFor="let id of room.boards">
+		<div *ngFor="let id of room.boards | keys">
 			{{id}}
 		</div>
 	</mat-card-content>
