@@ -2,14 +2,14 @@
 	<mat-sidenav #sidenav mode="side">
 		<h1>Bingo!</h1>
 		<mat-nav-list>
-			<h3 mat-subheader>Join a game</h3>
+			<h3 mat-subheader>Games</h3>
 			<a mat-list-item *ngFor="let room of rooms$ | async" [routerLink]="[room.id, 'board']">
 				<h4 matLine>{{ room.name }}</h4>
 				<span matLine>{{ (room.boards | keys).length }} player(s)</span>
 				<mat-icon class="launch" matTooltip="Join">launch</mat-icon>
 			</a>
 			<mat-divider></mat-divider>
-			<a mat-list-item>
+			<a mat-list-item (click)="showCreateDialog()">
 				<mat-icon mat-list-icon>add_circle</mat-icon>Create room
 			</a>
 			<mat-divider></mat-divider>

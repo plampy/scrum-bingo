@@ -1,6 +1,8 @@
 <ng-container *ngIf="board$ | async; let playerBoard">
 	<div class="header">
-		<button mat-raised-button (click)="resetBoard(playerBoard)">new board</button>
+		<button mat-icon-button (click)="resetBoard(playerBoard)">
+			<mat-icon>autorenew</mat-icon>
+		</button>
 		{{ playerBoard.id }}
 	</div>
 

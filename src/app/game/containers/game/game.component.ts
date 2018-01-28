@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { mergeMap, tap, map, switchMap } from 'rxjs/operators';
+import { mergeMap, tap, map, switchMap, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/operators/combineLatest';
 
@@ -29,29 +29,31 @@ export class GameComponent implements OnInit {
 		private route: ActivatedRoute) { }
 
 	ngOnInit() {
-		const roomId = this.route.snapshot.params['roomId'];
+		this.route.params.subscribe(params => {
+			const roomId = params['roomId'];
 
-		this.player$ = this.playerSvc.player$;
-		this.board$ = this.player$.pipe(
-			switchMap(player => {
-				const boardId = player.boards[roomId];
-				return this.boardSvc.getBoard(boardId);
-			})
-		);
-		this.competitorBoards$ = this.boardSvc.getByRoom(roomId).pipe(
-			combineLatest(this.board$),
-			map(both => {
-				const allBoards = both[0];
-				const currentBoard = both[1];
-				return allBoards.filter(b => b.id != currentBoard.id);
-			})
-		);
+			this.player$ = this.playerSvc.player$;
+			this.board$ = this.player$.pipe(
+				switchMap(player => {
+					const boardId = player.boards[roomId];
+					return this.boardSvc.getBoard(boardId);
+				})
+			);
+			this.competitorBoards$ = this.boardSvc.getByRoom(roomId).pipe(
+				combineLatest(this.board$),
+				map(both => {
+					const allBoards = both[0];
+					const currentBoard = both[1];
+					return allBoards.filter(b => b.id != currentBoard.id);
+				})
+			);
+		});
 	}
 
 	resetBoard(board: Board) {
-		this.board$ = this.boardSvc.createBoard().pipe(
+		this.boardSvc.createBoard().pipe(
 			map(newBoard => ({ ...newBoard, id: board.id, roomId: board.roomId })),
 			switchMap(b => this.boardSvc.updateBoard(b))
-		);
+		).subscribe(b => console.log(b)); // TODO: loading spinner?
 	}
 }

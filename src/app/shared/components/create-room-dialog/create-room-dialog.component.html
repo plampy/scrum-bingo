@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Enter a name</h1>
+<mat-dialog-content>
+	<mat-form-field>
+		<input matInput #ipt>
+	</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+	<button mat-raised-button color="primary" [mat-dialog-close]="ipt.value">
+		Create
+	</button>
+</mat-dialog-actions>

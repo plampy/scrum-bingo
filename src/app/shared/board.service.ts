@@ -43,7 +43,6 @@ export class BoardService {
 	getBoard(boardId: string): Observable<Board> {
 		const boardDoc = this.afs.collection<Board>(this.boardDb).doc<Board>(boardId);
 		return boardDoc.valueChanges().pipe(
-			take(1),
 			map(board => ({ ...board, id: boardId }))
 		);
 	}

@@ -14,17 +14,26 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { BoardService } from './board.service';
 import { RoomService } from './room.service';
 import { PlayerService } from './player.service';
 import { KeysPipe } from './pipes/keys.pipe';
+import { CreateRoomDialogComponent } from './components/create-room-dialog/create-room-dialog.component';
 
 @NgModule({
 	imports: [
-		CommonModule
+		CommonModule,
+		MatDialogModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatButtonModule
 	],
-	declarations: [KeysPipe],
+	declarations: [
+		KeysPipe,
+		CreateRoomDialogComponent
+	],
 	providers: [
 		TermsService,
 		BoardService,
@@ -44,7 +53,11 @@ import { KeysPipe } from './pipes/keys.pipe';
 		MatSidenavModule,
 		MatExpansionModule,
 		MatListModule,
+		MatDialogModule,
 		KeysPipe
+	],
+	entryComponents: [
+		CreateRoomDialogComponent
 	]
 })
 export class SharedModule { }
