@@ -11,6 +11,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 import { BoardService } from './board.service';
 import { RoomService } from './room.service';
@@ -38,6 +41,9 @@ import { KeysPipe } from './pipes/keys.pipe';
 		MatFormFieldModule,
 		MatMenuModule,
 		MatRippleModule,
+		MatSidenavModule,
+		MatExpansionModule,
+		MatListModule,
 		KeysPipe
 	]
 })

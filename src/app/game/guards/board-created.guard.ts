@@ -27,7 +27,6 @@ export class BoardCreatedGuard implements CanActivate {
 					return this.boardSvc.createBoard().pipe(
 						map(board => ({ ...board, roomId })),
 						switchMap(board => this.boardSvc.addBoard(board)),
-						tap(board => console.log('updating room')),
 						switchMap(board => {
 							const roomUpdates = <Partial<Room>>{ id: roomId, boards: { [board.id]: true }};
 							return this.roomSvc.updateRoom(roomUpdates);
