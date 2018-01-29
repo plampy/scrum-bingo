@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { mergeMap, tap, map, switchMap, filter } from 'rxjs/operators';
+import { mergeMap, tap, map, switchMap, filter, delay } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/operators/combineLatest';
 
@@ -55,5 +55,12 @@ export class GameComponent implements OnInit {
 			map(newBoard => ({ ...newBoard, id: board.id, roomId: board.roomId })),
 			switchMap(b => this.boardSvc.updateBoard(b))
 		).subscribe(b => console.log(b)); // TODO: loading spinner?
+	}
+
+	squareClicked(board: Board) {
+		Observable.of(board).pipe(
+			delay(300),
+			switchMap(b => this.boardSvc.updateBoard(b))
+		).subscribe(b => console.log(b)); // TODO: loading?
 	}
 }

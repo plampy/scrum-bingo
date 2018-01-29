@@ -7,7 +7,7 @@
 	</div>
 
 	<div class="board-wrap">
-		<bingo-board [board]="playerBoard" (squareClicked)="boardSvc.updateBoard(playerBoard)">
+		<bingo-board [board]="playerBoard" (squareClicked)="squareClicked(playerBoard)">
 		</bingo-board>
 	</div>
 </ng-container>
