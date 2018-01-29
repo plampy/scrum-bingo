@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { BoardService } from './board.service';
 import { RoomService } from './room.service';
@@ -54,6 +55,7 @@ import { CreateRoomDialogComponent } from './components/create-room-dialog/creat
 		MatExpansionModule,
 		MatListModule,
 		MatDialogModule,
+		MatGridListModule,
 		KeysPipe
 	],
 	entryComponents: [

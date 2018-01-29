@@ -1,6 +1,8 @@
 <mat-sidenav-container>
 	<mat-sidenav #sidenav mode="side">
-		<h1>Bingo!</h1>
+		<h1>
+			<a routerLink="''">Bingo!</a>
+		</h1>
 		<mat-nav-list>
 			<h3 mat-subheader>Games</h3>
 			<a mat-list-item *ngFor="let room of rooms$ | async" [routerLink]="[room.id, 'board']">

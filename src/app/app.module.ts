@@ -13,10 +13,13 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { GameModule } from './game/game.module';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HomeComponent } from './containers/home/home.component';
+import { AppService } from './services/app.service';
 
 @NgModule({
 	declarations: [
 		AppComponent,
+		HomeComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -32,6 +35,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 		AngularFireAuthModule
 	],
 	providers: [
+		AppService,
 		{ provide: LocationStrategy, useClass: HashLocationStrategy }
 	],
 	bootstrap: [AppComponent]

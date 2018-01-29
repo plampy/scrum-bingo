@@ -1,0 +1,9 @@
+<div class="bingo-row">
+	<div *ngFor="let letter of ['b', 'i', 'n', 'g', 'o']" 
+	matRipple 
+	[matRippleDisabled]="true" class="square">
+		{{letter}}
+	</div>
+</div>
+
+<button mat-raised-button color="primary" (click)="openDrawer()">Play</button>

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BoardComponent } from './components/board/board.component';
 import { SharedModule } from '../shared/shared.module';
 import { GameComponent } from './containers/game/game.component';
-import { RoomComponent } from './containers/room/room.component';
 import { BoardCreatedGuard } from './guards/board-created.guard';
 
 @NgModule({
@@ -12,7 +11,7 @@ import { BoardCreatedGuard } from './guards/board-created.guard';
 		SharedModule
 	],
 	providers: [BoardCreatedGuard],
-	declarations: [GameComponent, BoardComponent, RoomComponent],
-	exports: [GameComponent, BoardComponent, RoomComponent]
+	declarations: [GameComponent, BoardComponent],
+	exports: [GameComponent, BoardComponent]
 })
 export class GameModule { }
