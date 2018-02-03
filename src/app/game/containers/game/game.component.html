@@ -6,13 +6,12 @@
 		{{ playerBoard.id }}
 	</div>
 
-	<div class="board-wrap">
+	<div class="board-wrap" >
 		<bingo-board [board]="playerBoard" (squareClicked)="squareClicked(playerBoard)">
 		</bingo-board>
 	</div>
 </ng-container>
-
-<div class="other-players">
+<div class="other-players" [@miniBoardAnimation]="(board$ | async)?.id">
 	<div class="mini-board" *ngFor="let pb of competitorBoards$ | async">
 		<bingo-board [board]="pb" size="mini">
 		</bingo-board>

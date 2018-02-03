@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
 import { map, take, switchMap, tap } from 'rxjs/operators';
 import { withId } from './firebase-helper';
+import { Player } from './models/player.model';
 
 @Injectable()
 export class RoomService {
@@ -13,8 +14,8 @@ export class RoomService {
 
 	constructor(private afs: AngularFirestore) { }
 
-	createRoom(name: string): Observable<Room> {
-		const room: Partial<Room> = { name, boards: {} };
+	createRoom(name: string, player: Player): Observable<Room> {
+		const room: Partial<Room> = { name, boards: {}, createdBy: player.userId };
 		const collection = this.afs.collection(this.dbName);
 		const result = Observable.fromPromise(collection.add(room));
 		return result.pipe(

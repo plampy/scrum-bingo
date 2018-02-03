@@ -11,11 +11,16 @@ import { Room } from '../../../shared/models/room.model';
 import { RoomService } from '../../../shared/room.service';
 import { PlayerService } from '../../../shared/player.service';
 import { Player } from '../../../shared/models/player.model';
+import { miniBoardAnimation, fade, boardAnimation } from '../../../shared/animations';
 
 @Component({
 	selector: 'bingo-game',
 	templateUrl: './game.component.html',
-	styleUrls: ['./game.component.less']
+	styleUrls: ['./game.component.less'],
+	animations: [
+		miniBoardAnimation,
+		boardAnimation,
+	]
 })
 export class GameComponent implements OnInit {
 	public board$: Observable<Board>;

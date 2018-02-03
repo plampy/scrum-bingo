@@ -1,14 +1,16 @@
 <mat-sidenav-container>
 	<mat-sidenav #sidenav mode="side">
 		<h1>
-			<a routerLink="''">Bingo!</a>
+			<a routerLink="">Bingo!</a>
 		</h1>
 		<mat-nav-list>
 			<h3 mat-subheader>Games</h3>
-			<a mat-list-item *ngFor="let room of rooms$ | async" [routerLink]="[room.id, 'board']">
+			<a mat-list-item *ngFor="let room of rooms$ | async" [routerLink]="[room.id, 'board']" 
+				routerLinkActive="current-room" #rla="routerLinkActive">
 				<h4 matLine>{{ room.name }}</h4>
 				<span matLine>{{ (room.boards | keys).length }} player(s)</span>
-				<mat-icon class="launch" matTooltip="Join">launch</mat-icon>
+				<mat-icon *ngIf="rla.isActive">label_outline</mat-icon>
+				<mat-icon *ngIf="!rla.isActive" class="launch" matTooltip="Join">launch</mat-icon>
 			</a>
 			<mat-divider></mat-divider>
 			<a mat-list-item (click)="showCreateDialog()">
@@ -29,8 +31,8 @@
 			</button>
 		</div>
 
-		<div class="content">
-			<router-outlet></router-outlet>
+		<div class="content" [@routeAnimation]="o.isActivated && o.activatedRoute.snapshot.url">
+			<router-outlet #o="outlet"></router-outlet>
 		</div>
 	</mat-sidenav-content>
 </mat-sidenav-container>

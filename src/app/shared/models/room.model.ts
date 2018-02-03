@@ -4,4 +4,5 @@ export interface Room {
 	boards: {
 		[boardId: string]: true
 	};
+	createdBy: string;
 }

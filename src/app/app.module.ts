@@ -15,6 +15,17 @@ import { GameModule } from './game/game.module';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HomeComponent } from './containers/home/home.component';
 import { AppService } from './services/app.service';
+import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+
+export class CustomRouteReuseStrategy implements RouteReuseStrategy {
+	shouldDetach(route: ActivatedRouteSnapshot): boolean { return false; }
+	store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void { }
+	shouldAttach(route: ActivatedRouteSnapshot): boolean { return false; }
+	retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle { return null; }
+	shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+		return curr.routeConfig === null && future.routeConfig === null;
+	}
+}
 
 @NgModule({
 	declarations: [
@@ -28,7 +39,6 @@ import { AppService } from './services/app.service';
 		CommonModule,
 		GameModule,
 		FormsModule,
-		MatButtonModule,
 		BrowserAnimationsModule,
 		AngularFireModule.initializeApp(environment.firebase),
 		AngularFirestoreModule,
@@ -36,6 +46,7 @@ import { AppService } from './services/app.service';
 	],
 	providers: [
 		AppService,
+		{ provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
 		{ provide: LocationStrategy, useClass: HashLocationStrategy }
 	],
 	bootstrap: [AppComponent]
