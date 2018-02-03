@@ -8,9 +8,8 @@ import { map, switchMap, filter, tap, combineLatest } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/observable/fromPromise';
 
-import { Player } from './models/player.model';
-import { Room } from './models/room.model';
-import { withId } from './firebase-helper';
+import { Player, Room } from '../models';
+import { withId } from '../firebase-helper';
 import { BoardService } from './board.service';
 
 @Injectable()

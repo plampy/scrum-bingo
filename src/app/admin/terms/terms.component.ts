@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { TermsService } from '../../shared/terms.service';
-import { Term } from '../../shared/models/term.model';
+import { TermsService } from '../../shared/services';
+import { Term } from '../../shared/models';
 import { MatExpansionPanel } from '@angular/material/expansion';
+
 @Component({
 	selector: 'bingo-terms',
 	templateUrl: './terms.component.html',

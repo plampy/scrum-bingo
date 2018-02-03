@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Room } from './models/room.model';
+
+import { Room, Player } from '../models';
+import { withId } from '../firebase-helper';
+
 import 'rxjs/add/observable/fromPromise';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
 import { map, take, switchMap, tap } from 'rxjs/operators';
-import { withId } from './firebase-helper';
-import { Player } from './models/player.model';
 
 @Injectable()
 export class RoomService {

@@ -5,12 +5,8 @@ import { mergeMap, tap, map, switchMap, filter, delay } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/operators/combineLatest';
 
-import { Board } from '../../../shared/models/board.model';
-import { BoardService } from '../../../shared/board.service';
-import { Room } from '../../../shared/models/room.model';
-import { RoomService } from '../../../shared/room.service';
-import { PlayerService } from '../../../shared/player.service';
-import { Player } from '../../../shared/models/player.model';
+import { Board, Room, Player } from '../../../shared/models';
+import { BoardService, RoomService, PlayerService } from '../../../shared/services';
 import { miniBoardAnimation, fade, boardAnimation } from '../../../shared/animations';
 
 @Component({

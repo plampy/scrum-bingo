@@ -5,10 +5,8 @@ import { filter, map, tap, switchMap, zip } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import { PlayerService } from '../../shared/player.service';
-import { BoardService } from '../../shared/board.service';
-import { RoomService } from '../../shared/room.service';
-import { Room } from '../../shared/models/room.model';
+import { PlayerService, BoardService, RoomService } from '../../shared/services';
+import { Room } from '../../shared/models';
 
 @Injectable()
 export class BoardCreatedGuard implements CanActivate {

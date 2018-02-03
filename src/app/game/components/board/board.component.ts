@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Board } from '../../../shared/models/board.model';
-import { Square } from '../../../shared/models/square.model';
+import { Board, Square } from '../../../shared/models';
 
 @Component({
 	selector: 'bingo-board',

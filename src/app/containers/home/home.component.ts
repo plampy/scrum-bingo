@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { delay, switchMap, take, map } from 'rxjs/operators';
 import 'rxjs/add/observable/interval';
 
-import { Board } from '../../shared/models/board.model';
-import { BoardService } from '../../shared/board.service';
+import { Board } from '../../shared/models';
+import { BoardService } from '../../shared/services';
 import { AppService } from '../../services/app.service';
 
 @Component({

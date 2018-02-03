@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Board } from './models/board.model';
+
+import { Board, Term, Square } from '../models';
+import { withId } from '../firebase-helper';
+
 import { Observable } from 'rxjs/Observable';
-import { Term } from './models/term.model';
-import { Square } from './models/square.model';
 import { take } from 'rxjs/operators/take';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { map, filter } from 'rxjs/operators';
 import 'rxjs/add/observable/forkJoin';
 import { of } from 'rxjs/observable/of';
-import { withId } from './firebase-helper';
 
 @Injectable()
 export class BoardService {

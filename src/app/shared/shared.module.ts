@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TermsService } from './terms.service';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -17,11 +16,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-import { BoardService } from './board.service';
-import { RoomService } from './room.service';
-import { PlayerService } from './player.service';
 import { KeysPipe } from './pipes/keys.pipe';
 import { CreateRoomDialogComponent } from './components/create-room-dialog/create-room-dialog.component';
+import { services } from './services';
 
 @NgModule({
 	imports: [
@@ -35,12 +32,7 @@ import { CreateRoomDialogComponent } from './components/create-room-dialog/creat
 		KeysPipe,
 		CreateRoomDialogComponent
 	],
-	providers: [
-		TermsService,
-		BoardService,
-		RoomService,
-		PlayerService
-	],
+	providers: [...services],
 	exports: [
 		MatButtonModule,
 		MatTabsModule,

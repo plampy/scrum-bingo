@@ -3,15 +3,14 @@ import { MatDialog, MatSidenav } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
-
-import { RoomService } from './shared/room.service';
-import { Room } from './shared/models/room.model';
-import { CreateRoomDialogComponent } from './shared/components/create-room-dialog/create-room-dialog.component';
 import { filter, switchMap } from 'rxjs/operators';
-import { AppService } from './services/app.service';
-import { combineLatest } from 'rxjs/operators/combineLatest';
-import { PlayerService } from './shared/player.service';
+
+import { RoomService, PlayerService } from './shared/services';
+import { Room } from './shared/models';
 import { routeAnimation } from './shared/animations';
+import { CreateRoomDialogComponent } from './shared/components/create-room-dialog/create-room-dialog.component';
+import { AppService } from './services/app.service';
+
 
 @Component({
 	selector: 'bingo-root',

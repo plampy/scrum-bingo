@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Term } from './models/term.model';
+import { Term, Square, Board } from '../models';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { take } from 'rxjs/operators/take';
 import { switchMap } from 'rxjs/operators/switchMap';
 import 'rxjs/add/observable/fromPromise';
-import { Board } from './models/board.model';
-import { Square } from './models/square.model';
-import { withId } from './firebase-helper';
+import { withId } from '../firebase-helper';
 
 @Injectable()
 export class TermsService {
