@@ -5,8 +5,7 @@
 		</h1>
 		<mat-nav-list>
 			<h3 mat-subheader>Games</h3>
-			<a mat-list-item *ngFor="let room of rooms$ | async" [routerLink]="[room.id, 'board']" 
-				routerLinkActive="current-room" #rla="routerLinkActive">
+			<a mat-list-item *ngFor="let room of rooms$ | async" [routerLink]="[room.id, 'board']" routerLinkActive="current-room" #rla="routerLinkActive">
 				<h4 matLine>{{ room.name }}</h4>
 				<span matLine>{{ (room.boards | keys).length }} player(s)</span>
 				<mat-icon *ngIf="rla.isActive">label_outline</mat-icon>
@@ -21,6 +20,24 @@
 				<mat-icon mat-list-icon>add_circle</mat-icon>Add words
 			</a>
 			<mat-divider></mat-divider>
+			<ng-container *ngIf="player$ | async let player">
+				<ng-container *ngIf="player.isAnonymous">
+					<h3 mat-subheader class="anon">
+						<mat-icon mat-list-icon>perm_identity</mat-icon>Anonymous User
+					</h3>
+					<a mat-list-item (click)="googleLogin()">
+						<img class="provider" src="//www.gstatic.com/mobilesdk/160512_mobilesdk/auth_service_google.svg" />Log in with Google
+					</a>
+				</ng-container>
+				<ng-container *ngIf="!player.isAnonymous">
+					<h3 mat-subheader>
+						<img class="provider" src="//www.gstatic.com/mobilesdk/160512_mobilesdk/auth_service_google.svg" />{{ player.displayName }}
+					</h3>
+					<a mat-list-item (click)="logout()">
+						Log out
+					</a>
+				</ng-container>
+			</ng-container>
 		</mat-nav-list>
 	</mat-sidenav>
 	<mat-sidenav-content>

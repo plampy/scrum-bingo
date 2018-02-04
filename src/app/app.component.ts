@@ -3,10 +3,10 @@ import { MatDialog, MatSidenav } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, take } from 'rxjs/operators';
 
 import { RoomService, PlayerService } from './shared/services';
-import { Room } from './shared/models';
+import { Room, Player } from './shared/models';
 import { routeAnimation } from './shared/animations';
 import { CreateRoomDialogComponent } from './shared/components/create-room-dialog/create-room-dialog.component';
 import { AppService } from './services/app.service';
@@ -20,6 +20,7 @@ import { AppService } from './services/app.service';
 })
 export class AppComponent implements OnInit {
 	public rooms$: Observable<Room[]>;
+	public player$: Observable<Player>;
 	@ViewChild(MatSidenav) nav: MatSidenav;
 
 	constructor(
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
 		public createRoomDialog: MatDialog) { }
 
 	ngOnInit() {
+		this.player$ = this.playerSvc.player$;
 		this.rooms$ = this.roomSvc.getRooms();
 		this.appSvc.navDrawerOpen$.subscribe(() => {
 			this.nav.open();
@@ -42,8 +44,21 @@ export class AppComponent implements OnInit {
 			filter(name => !!name),
 			switchMap((name: string) =>
 				this.playerSvc.player$.pipe(
+					take(1),
 					switchMap(player => this.roomSvc.createRoom(name, player))
 				))
 			).subscribe(room => this.router.navigate([room.id, 'board']));
+	}
+
+	googleLogin() {
+		this.playerSvc.linkWithGoogleAccount().subscribe(
+			res => console.log('linked')
+		);
+	}
+
+	logout() {
+		this.playerSvc.logout().subscribe(
+			res => this.router.navigate([])
+		);
 	}
 }
